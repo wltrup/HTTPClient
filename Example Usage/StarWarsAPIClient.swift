@@ -2,6 +2,16 @@ import HTTPClient
 
 public class StarWarsAPIClient {
 
+    public init(loader: HTTPLoader) {
+        self.loader = loader
+    }
+
+    private let loader: HTTPLoader = URLSession.shared
+
+}
+
+extension StarWarsAPIClient {
+
     public func requestPeople(/* completion: @escaping (...) -> Void */) {
 
         var r = HTTPRequest()
@@ -14,7 +24,5 @@ public class StarWarsAPIClient {
         }
 
     }
-
-    private let loader: HTTPLoader = URLSession.shared
 
 }
