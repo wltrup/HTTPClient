@@ -15,6 +15,8 @@ public struct HTTPMethod: Hashable {
 
 }
 
+// MARK: - CustomStringConvertible API
+
 extension HTTPMethod: CustomStringConvertible {
 
     public var description: String {

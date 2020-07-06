@@ -2,11 +2,11 @@ import HTTPClient
 
 public class StarWarsAPIClient {
 
-    public init(loader: HTTPLoader) {
+    public init(_ loader: HTTPLoader = URLSessionLoader()) {
         self.loader = loader
     }
 
-    private let loader: HTTPLoader = URLSession.shared
+    private let loader: HTTPLoader
 
 }
 

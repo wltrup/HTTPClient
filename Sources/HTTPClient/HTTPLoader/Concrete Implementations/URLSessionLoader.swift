@@ -1,8 +1,24 @@
 import Foundation
 
-extension URLSession: HTTPLoader {
+public final class URLSessionLoader: HTTPLoader {
 
-    public func load(request: HTTPRequest, completion: @escaping HTTPResultHandler) {
+    public init(_ session: URLSession = .shared) {
+        self.session = session
+    }
+
+    public override func load(request: HTTPRequest, completion: @escaping HTTPResultHandler) {
+        _load(request: request, completion: completion)
+    }
+
+    private let session: URLSession
+
+}
+
+// MARK: - Private API
+
+extension URLSessionLoader {
+
+    private func _load(request: HTTPRequest, completion: @escaping HTTPResultHandler) {
 
         guard let url = request.url else {
             let error = HTTPError(
@@ -43,7 +59,7 @@ extension URLSession: HTTPLoader {
 
         }
 
-        let dataTask = self.dataTask(with: urlRequest) { (data, response, error) in
+        let dataTask = session.dataTask(with: urlRequest) { (data, response, error) in
             let result = self.makeHTTPResult(
                 request: request,
                 data: data,
@@ -78,9 +94,9 @@ extension URLSession: HTTPLoader {
                 case .badURL:
                     code = .invalidRequest(.invalidURL)
 
-//                case .unsupportedURL: code = ...
-//                case .cannotFindHost: code = ...
-//                ...
+                //                case .unsupportedURL: code = ...
+                //                case .cannotFindHost: code = ...
+                //                ...
 
                 default:
                     code = .unknown
@@ -95,7 +111,7 @@ extension URLSession: HTTPLoader {
             return .failure(httpError)
         }
 
-        // an error, but not a URL error
+            // an error, but not a URL error
         else if let e = error {
             let httpError = HTTPError(
                 code: .unknown,
@@ -106,12 +122,12 @@ extension URLSession: HTTPLoader {
             return .failure(httpError)
         }
 
-        // no error, and an HTTPURLResponse
+            // no error, and an HTTPURLResponse
         else if let r = httpResponse {
             return .success(r)
         }
 
-        // not an error, but also not an HTTPURLResponse
+            // not an error, but also not an HTTPURLResponse
         else {
             let httpError = HTTPError(
                 code: .invalidResponse,

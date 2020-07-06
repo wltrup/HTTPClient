@@ -10,6 +10,8 @@ public struct HTTPStatusCode: Hashable {
 
 }
 
+// MARK: - CustomStringConvertible API
+
 extension HTTPStatusCode: CustomStringConvertible {
 
     public var description: String {

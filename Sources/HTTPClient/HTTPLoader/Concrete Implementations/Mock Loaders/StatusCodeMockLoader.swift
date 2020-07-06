@@ -1,6 +1,6 @@
 import Foundation
 
-public class FixedStatusCodeMockLoader: BaseMockLoader {
+public class StatusCodeMockLoader: MockLoader {
 
     public let statusCode: HTTPStatusCode
 

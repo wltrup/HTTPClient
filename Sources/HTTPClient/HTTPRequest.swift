@@ -14,6 +14,8 @@ public struct HTTPRequest {
 
 }
 
+// MARK: - Convenience API
+
 extension HTTPRequest {
 
     public var url: URL? {

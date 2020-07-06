@@ -15,6 +15,8 @@ public struct HTTPResponse {
 
 }
 
+// MARK: - Convenience API
+
 extension HTTPResponse {
 
     public var statusCode: HTTPStatusCode {

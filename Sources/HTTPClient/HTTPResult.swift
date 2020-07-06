@@ -2,6 +2,8 @@
 
 public typealias HTTPResult = Result<HTTPResponse, HTTPError>
 
+// MARK: - Convenience API
+
 extension HTTPResult {
 
     public var request: HTTPRequest {

@@ -1,8 +1,8 @@
-import Foundation
+
 
 public typealias MockHandler = (HTTPRequest, HTTPResultHandler) -> Void
 
-public class MockLoader: BaseMockLoader {
+public class SequentialMockLoader: MockLoader {
 
     public override func load(request: HTTPRequest, completion: @escaping HTTPResultHandler) {
 
