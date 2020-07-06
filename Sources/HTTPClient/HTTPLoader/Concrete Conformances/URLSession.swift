@@ -2,7 +2,7 @@ import Foundation
 
 extension URLSession: HTTPLoader {
 
-    public func load(request: HTTPRequest, completion: @escaping (HTTPResult) -> Void) {
+    public func load(request: HTTPRequest, completion: @escaping HTTPResultHandler) {
 
         guard let url = request.url else {
             let error = HTTPError(
