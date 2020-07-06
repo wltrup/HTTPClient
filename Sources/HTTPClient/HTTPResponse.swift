@@ -17,8 +17,8 @@ public struct HTTPResponse {
 
 extension HTTPResponse {
 
-    public var status: HTTPStatus {
-        HTTPStatus(response.statusCode)
+    public var statusCode: HTTPStatusCode {
+        HTTPStatusCode(response.statusCode)
     }
 
     public var message: String {

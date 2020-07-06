@@ -1,16 +1,16 @@
 
 
-public struct HTTPStatus: Hashable {
+public struct HTTPStatusCode: Hashable {
 
     public init(_ value: Int) {
         self.value = value
     }
 
-    private let value: Int
+    public let value: Int
 
 }
 
-extension HTTPStatus: CustomStringConvertible {
+extension HTTPStatusCode: CustomStringConvertible {
 
     public var description: String {
         "\(value)"
