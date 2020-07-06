@@ -1,6 +1,6 @@
 
 
-public class ModifiedRequestLoader: HTTPLoader {
+public class ModifyRequestLoader: HTTPLoader {
 
     public init(_ requestModifier: @escaping (HTTPRequest) -> HTTPRequest) {
         self.requestModifier = requestModifier
