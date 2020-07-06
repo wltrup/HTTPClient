@@ -2,7 +2,7 @@
 
 public struct HTTPStatusCode: Hashable {
 
-    public init(_ value: Int) {
+    public init(value: Int) {
         self.value = value
     }
 

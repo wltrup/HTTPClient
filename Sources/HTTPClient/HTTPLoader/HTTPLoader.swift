@@ -13,17 +13,12 @@ open class HTTPLoader {
 
     public init() {}
 
-    open func load(request: HTTPRequest, completion: @escaping HTTPResultHandler) {
+    open func load(_ request: HTTPRequest, completion: @escaping HTTPResultHandler) {
 
         if let next = nextLoader {
-            next.load(request: request, completion: completion)
+            next.load(request, completion: completion)
         } else {
-            let error = HTTPError(
-                code: .cannotConnect,
-                request: request,
-                response: nil,
-                underlyingError: "no HTTPLoader available"
-            )
+            let error = HTTPError(.cannotConnect, request, nil, "no HTTPLoader available")
             completion(.failure(error))
         }
 
@@ -40,10 +35,10 @@ precedencegroup LoaderChainingPrecedence {
     associativity: right
 }
 
-infix operator --> : LoaderChainingPrecedence
+infix operator |> : LoaderChainingPrecedence
 
 @discardableResult
-public func --> (lhs: HTTPLoader?, rhs: HTTPLoader?) -> HTTPLoader? {
+public func |> (lhs: HTTPLoader?, rhs: HTTPLoader?) -> HTTPLoader? {
     lhs?.nextLoader = rhs
     return lhs ?? rhs
 }

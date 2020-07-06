@@ -2,14 +2,9 @@
 
 open class MockLoader: HTTPLoader {
 
-    open override func load(request: HTTPRequest, completion: @escaping HTTPResultHandler) {
+    open override func load(_ request: HTTPRequest, completion: @escaping HTTPResultHandler) {
 
-        let error = HTTPError(
-            code: .cannotConnect,
-            request: request,
-            response: nil,
-            underlyingError: "base mock handler"
-        )
+        let error = HTTPError(.cannotConnect, request, nil, "base mock handler")
         completion(.failure(error))
 
     }

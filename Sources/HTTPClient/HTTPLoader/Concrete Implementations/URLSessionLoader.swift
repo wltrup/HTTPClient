@@ -6,8 +6,8 @@ public final class URLSessionLoader: HTTPLoader {
         self.session = session
     }
 
-    public override func load(request: HTTPRequest, completion: @escaping HTTPResultHandler) {
-        _load(request: request, completion: completion)
+    public override func load(_ request: HTTPRequest, completion: @escaping HTTPResultHandler) {
+        _load(request, completion: completion)
     }
 
     private let session: URLSession
@@ -18,15 +18,10 @@ public final class URLSessionLoader: HTTPLoader {
 
 extension URLSessionLoader {
 
-    private func _load(request: HTTPRequest, completion: @escaping HTTPResultHandler) {
+    private func _load(_ request: HTTPRequest, completion: @escaping HTTPResultHandler) {
 
         guard let url = request.url else {
-            let error = HTTPError(
-                code: .invalidRequest(.invalidURL),
-                request: request,
-                response: nil,
-                underlyingError: nil
-            )
+            let error = HTTPError(.invalidRequest(.invalidURL), request)
             completion(.failure(error))
             return
         }
@@ -47,12 +42,7 @@ extension URLSessionLoader {
             }
 
             do { urlRequest.httpBody = try request.body.encode() } catch {
-                let error = HTTPError(
-                    code: .invalidRequest(.invalidBody),
-                    request: request,
-                    response: nil,
-                    underlyingError: nil
-                )
+                let error = HTTPError(.invalidRequest(.invalidBody), request)
                 completion(.failure(error))
                 return
             }
@@ -60,12 +50,7 @@ extension URLSessionLoader {
         }
 
         let dataTask = session.dataTask(with: urlRequest) { (data, response, error) in
-            let result = self.makeHTTPResult(
-                request: request,
-                data: data,
-                response: response,
-                error: error
-            )
+            let result = self.makeHTTPResult(request, data, response, error)
             completion(result)
         }
 
@@ -74,16 +59,16 @@ extension URLSessionLoader {
     }
 
     private func makeHTTPResult(
-        request: HTTPRequest,
-        data: Data?,
-        response: URLResponse?,
-        error: Error?
+        _ request: HTTPRequest,
+        _ data: Data?,
+        _ response: URLResponse?,
+        _ error: Error?
     ) -> HTTPResult {
 
         var httpResponse: HTTPResponse?
 
         if let r = response as? HTTPURLResponse {
-            httpResponse = HTTPResponse(request: request, response: r, body: data)
+            httpResponse = HTTPResponse(request, r, data)
         }
 
         // an URL error
@@ -102,23 +87,13 @@ extension URLSessionLoader {
                     code = .unknown
 
             }
-            let httpError = HTTPError(
-                code: code,
-                request: request,
-                response: httpResponse,
-                underlyingError: e
-            )
+            let httpError = HTTPError(code, request, httpResponse, e)
             return .failure(httpError)
         }
 
             // an error, but not a URL error
         else if let e = error {
-            let httpError = HTTPError(
-                code: .unknown,
-                request: request,
-                response: httpResponse,
-                underlyingError: e
-            )
+            let httpError = HTTPError(.unknown, request, httpResponse, e)
             return .failure(httpError)
         }
 
@@ -129,12 +104,7 @@ extension URLSessionLoader {
 
             // not an error, but also not an HTTPURLResponse
         else {
-            let httpError = HTTPError(
-                code: .invalidResponse,
-                request: request,
-                response: nil,
-                underlyingError: error
-            )
+            let httpError = HTTPError(.invalidResponse, request, nil, error)
             return .failure(httpError)
         }
 

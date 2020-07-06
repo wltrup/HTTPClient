@@ -5,7 +5,11 @@ public struct HTTPResponse {
     public let request: HTTPRequest
     public let body: Data?
 
-    public init(request: HTTPRequest, response: HTTPURLResponse, body: Data? = nil) {
+    public init(
+        _ request: HTTPRequest,
+        _ response: HTTPURLResponse,
+        _ body: Data? = nil
+    ) {
         self.request = request
         self.response = response
         self.body = body
@@ -20,7 +24,7 @@ public struct HTTPResponse {
 extension HTTPResponse {
 
     public var statusCode: HTTPStatusCode {
-        HTTPStatusCode(response.statusCode)
+        HTTPStatusCode(value: response.statusCode)
     }
 
     public var message: String {

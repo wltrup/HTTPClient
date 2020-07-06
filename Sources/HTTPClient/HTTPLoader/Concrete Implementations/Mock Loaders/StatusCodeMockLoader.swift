@@ -4,11 +4,11 @@ public class StatusCodeMockLoader: MockLoader {
 
     public let statusCode: HTTPStatusCode
 
-    public init(statusCode: HTTPStatusCode) {
+    public init(_ statusCode: HTTPStatusCode) {
         self.statusCode = statusCode
     }
 
-    public override func load(request: HTTPRequest, completion: @escaping HTTPResultHandler) {
+    public override func load(_ request: HTTPRequest, completion: @escaping HTTPResultHandler) {
 
         let urlResponse = HTTPURLResponse(
             url: request.url!,
@@ -16,7 +16,7 @@ public class StatusCodeMockLoader: MockLoader {
             httpVersion: "1.1",
             headerFields: nil
         )
-        let response = HTTPResponse(request: request, response: urlResponse!, body: nil)
+        let response = HTTPResponse(request, urlResponse!)
         completion(.success(response))
 
     }

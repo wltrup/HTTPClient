@@ -7,6 +7,18 @@ public struct HTTPError: Error {
     public let response: HTTPResponse?
     public let underlyingError: Error?
 
+    public init(
+        _ code: Code,
+        _ request: HTTPRequest,
+        _ response: HTTPResponse? = nil,
+        _ underlyingError: Error? = nil
+    ) {
+        self.code = code
+        self.request = request
+        self.response = response
+        self.underlyingError = underlyingError
+    }
+
     public enum Code {
         case invalidRequest(InvalidRequest) // the HTTPRequest could not be turned into a URLRequest
         case cannotConnect                  // some sort of connectivity problem
