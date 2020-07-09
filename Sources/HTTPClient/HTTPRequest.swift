@@ -11,6 +11,7 @@ public struct HTTPRequest {
     }
 
     private var urlComponents = URLComponents()
+    private var options = [ObjectIdentifier: Any]()
 
 }
 
@@ -34,6 +35,23 @@ extension HTTPRequest {
     public var path: String {
         get { urlComponents.path }
         set { urlComponents.path = newValue }
+    }
+
+    public var serverEnvironment: ServerEnvironment? {
+        get { self[option: ServerEnvironment.self] }
+        set { self[option: ServerEnvironment.self] = newValue }
+    }
+
+    public subscript <O: HTTPRequestOption> (option type: O.Type) -> O.Value {
+        get {
+            let id = ObjectIdentifier(type)
+            guard let value = options[id] as? O.Value else { return type.defaultOptionValue }
+            return value
+        }
+        set {
+            let id = ObjectIdentifier(type)
+            options[id] = newValue
+        }
     }
 
 }

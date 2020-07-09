@@ -1,11 +1,13 @@
 import Foundation
 
-public struct ServerEnvironment {
+public struct ServerEnvironment: HTTPRequestOption {
 
     public var host: String
     public var pathPrefix: String
     public var headers: [String: String]
     public var query: [URLQueryItem]
+
+    public static let defaultOptionValue: ServerEnvironment? = nil
 
     public init(
         host: String,

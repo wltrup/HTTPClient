@@ -13,17 +13,19 @@ public class ApplyEnvironmentLoader: HTTPLoader {
 
         var copy = request
 
+        let requestEnvironment = request.serverEnvironment ?? environment
+
         if copy.host?.isEmpty ?? true {
-            copy.host = environment.host
+            copy.host = requestEnvironment.host
         }
 
         if copy.path.hasPrefix("/") == false {
-            // TODO: apply the environment.pathPrefix
+            // TODO: apply the requestEnvironment.pathPrefix
         }
 
-        // TODO: apply the query items from the environment
+        // TODO: apply the query items from requestEnvironment
 
-        for (header, value) in environment.headers {
+        for (header, value) in requestEnvironment.headers {
             // TODO: add these header values to the request
         }
 
