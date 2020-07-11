@@ -1,5 +1,7 @@
 import Foundation
 
+// A mock loader that always creates a successful response with a given status code.
+
 public class StatusCodeMockLoader: MockLoader {
 
     public let statusCode: HTTPStatusCode

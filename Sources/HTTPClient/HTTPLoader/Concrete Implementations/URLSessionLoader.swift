@@ -79,9 +79,9 @@ extension URLSessionLoader {
                 case .badURL:
                     code = .invalidRequest(.invalidURL)
 
-                //                case .unsupportedURL: code = ...
-                //                case .cannotFindHost: code = ...
-                //                ...
+                // case .unsupportedURL: code = ...
+                // case .cannotFindHost: code = ...
+                // ...
 
                 default:
                     code = .unknown
@@ -91,18 +91,18 @@ extension URLSessionLoader {
             return .failure(httpError)
         }
 
-            // an error, but not a URL error
+        // an error, but not a URL error
         else if let e = error {
             let httpError = HTTPError(.unknown, request, httpResponse, e)
             return .failure(httpError)
         }
 
-            // no error, and an HTTPURLResponse
+        // no error, and an HTTPURLResponse
         else if let r = httpResponse {
             return .success(r)
         }
 
-            // not an error, but also not an HTTPURLResponse
+        // not an error, but also not an HTTPURLResponse
         else {
             let httpError = HTTPError(.invalidResponse, request, nil, error)
             return .failure(httpError)

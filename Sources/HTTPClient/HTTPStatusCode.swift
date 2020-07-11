@@ -2,11 +2,11 @@
 
 public struct HTTPStatusCode: Hashable {
 
+    public let value: Int
+
     public init(value: Int) {
         self.value = value
     }
-
-    public let value: Int
 
 }
 
