@@ -4,7 +4,7 @@ public class StarWarsAPIClient {
 
     public init(_ loader: HTTPLoader = URLSessionLoader()) {
 
-        let modifier = ModifiedRequestLoader { request in
+        let modifier = ModifyRequestLoader { request in
             var copy = request
             if copy.host.isEmpty { copy.host = "swapi.dev" }
             if copy.path.hasPrefix("/") == false { copy.path = "/api/" + copy.path }
