@@ -1,6 +1,8 @@
 import Foundation
 import Dispatch
 
+// Shamelessly appropriated from https://github.com/basememara/SynchronizedGeneric
+
 public struct SynchronizedBarrier <Value> {
 
     public init(_ value: Value) {
